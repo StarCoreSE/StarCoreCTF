@@ -232,13 +232,13 @@ namespace Klime.CTF
                     if (player.Character != null && !player.Character.IsDead)
                     {
                         double distance = Vector3D.Distance(player.Character.WorldMatrix.Translation, flag_entity.WorldMatrix.Translation);
-                        if (cockpit_allowed && distance <= 5)
+                        if (cockpit_allowed && distance <= 50)
                         {
                             return_list.Add(player);
                         }
                         else
                         {
-                            if (player.Controller?.ControlledEntity?.Entity is IMyCharacter && distance <= 2)
+                            if (player.Controller?.ControlledEntity?.Entity is IMyCharacter && distance <= 40)
                             {
                                 return_list.Add(player);
                             }
@@ -676,35 +676,11 @@ namespace Klime.CTF
 
         private SerializableMatrix GetHomePosition(Vector3D pos)
         {
-            bool success = false;
             SerializableMatrix mat = MatrixD.Identity;
 
-            MyPlanet planet = MyGamePruningStructure.GetClosestPlanet(pos);
-            if (planet != null)
-            {
-                Vector3D up = Vector3D.Normalize(pos - planet.PositionComp.GetPosition());
-                Vector3D forward = Vector3D.Normalize(MyUtils.GetRandomPerpendicularVector(ref up));
+            // Set the flag's home position directly to the provided position
+            mat = MatrixD.CreateWorld(pos, Vector3D.Forward, Vector3D.Up);
 
-                mat = MatrixD.CreateWorld(pos, forward, up);
-                success = true;
-            }
-            else
-            {
-                var gravA = MyAPIGateway.Physics.CalculateArtificialGravityAt(pos,0);
-                if (gravA.Length() > 0)
-                {
-                    Vector3D up = Vector3D.Normalize(-1 * gravA);
-                    Vector3D forward = Vector3D.Normalize(MyUtils.GetRandomPerpendicularVector(ref up));
-
-                    mat = MatrixD.CreateWorld(pos, forward, up);
-                    success = true;
-                }
-            }
-
-            if (!success)
-            {
-                MyVisualScriptLogicProvider.SendChatMessage("ERROR: Flag must be inside planet gravity or artificial gravity", "Server");
-            }
             return mat;
         }
 
@@ -871,14 +847,14 @@ namespace Klime.CTF
 
                                                         if (pickup_in_cockpit)
                                                         {
-                                                            if (distance <= 5)
+                                                            if (distance <= 50)
                                                             {
                                                                 valid_cap = true;
                                                             }
                                                         }
                                                         else
                                                         {
-                                                            if (distance <= 4)
+                                                            if (distance <= 40)
                                                             {
                                                                 valid_cap = true;
                                                             }
@@ -905,14 +881,14 @@ namespace Klime.CTF
 
                                                     if (pickup_in_cockpit)
                                                     {
-                                                        if (distance <= 5)
+                                                        if (distance <= 50)
                                                         {
                                                             valid_cap = true;
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        if (distance <= 4)
+                                                        if (distance <= 40)
                                                         {
                                                             valid_cap = true;
                                                         }
