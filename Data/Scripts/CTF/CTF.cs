@@ -1123,8 +1123,8 @@ namespace Klime.CTF
                             }
 
                             MyTransparentGeometry.AddBillboardOriented(square, subflag.flag_color, subflag.flag_entity.WorldMatrix.Translation +
-                                subflag.flag_entity.WorldMatrix.Up * 0.3f + subflag.flag_entity.WorldMatrix.Backward * 0.55f,
-                                subflag.flag_entity.WorldMatrix.Forward, subflag.flag_entity.WorldMatrix.Up, 0.5f, 0.3f, Vector2.Zero, BlendTypeEnum.PostPP);
+                                subflag.flag_entity.WorldMatrix.Up * 70f + subflag.flag_entity.WorldMatrix.Backward * 50f,
+                                subflag.flag_entity.WorldMatrix.Forward, subflag.flag_entity.WorldMatrix.Up, 50f, 20f, Vector2.Zero, BlendTypeEnum.PostPP);
 
                             Vector4 beam_col = subflag.flag_color;
                             beam_col.W *= 0.2f;
